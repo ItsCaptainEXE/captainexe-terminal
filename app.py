@@ -30,18 +30,18 @@ MESSAGES = [
     'print("yup,yup just finishing my coffee")',
     'print("i might be ignoring you")',
 
+    # funnier new ones
     'print("loading… probably")',
     'print("this is fine. everything is fine.")',
-    'print("your patience is appreciated. by me. only me.")',
-    'print("fun fact: this message is completely useless")',
-    'print("if this loads, you win absolutely nothing")',
+    'print("your patience is being monitored")',
+    'print("fun fact: this message does nothing")',
     'print("hold on, recalibrating the flux capacitor")',
     'print("optimizing… for dramatic effect")',
     'print("loading the loading screen…")',
     'print("please do not turn off your human")',
     'print("processing your vibe…")',
     'print("booting the cat…")',
-    'print("compiling your patience.exe")'
+    'print("compiling patience.exe")'
 ]
 
 @app.route("/")
@@ -49,7 +49,8 @@ def stream():
     def gen():
         while True:
             msg = random.choice(MESSAGES)
-            yield "\033[2J\033[H" + msg + "\n\n" + BANNER + "\n"
+            screen = "\033[2J\033[H" + msg + "\n\n" + BANNER + "\n"
+            yield screen
             time.sleep(2.3)
     return Response(gen(), mimetype="text/plain")
 
