@@ -9,7 +9,7 @@ WHITE = "\033[97m"
 RESET = "\033[0m"
 
 BANNER = rf"""
-{WHITE}print("yup,yup just finishing my coffee")
+{WHITE}
 
           (=^･ω･^=)  💻💥💥
             /   \      *tap tap*
