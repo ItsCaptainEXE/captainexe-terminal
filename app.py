@@ -3,15 +3,16 @@ import time, random
 
 app = Flask(__name__)
 
-BANNER = """
-          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-          ⠀⠀⠀⠀⠀⠀(=^･ω･^=)  ⌨️💥💥⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-          ⠀⠀⠀⠀⠀⠀/︶⌨︶\\   *tap tap*⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-          ⠀⠀⠀⠀⠀⠀|      |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-          ⠀⠀⠀⠀⠀⠀|______|⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+BANNER = r"""
+print("yup yup finishing my coffee")
 
-                                                             @ItsCaptainEXE
-                          captainexe.live • github.com/ItsCaptainEXE
+          (=^･ω･^=)  💻💥💥
+            /   \      *tap tap*
+            |   |      
+            |___|
+
+                          @ItsCaptainEXE
+          captainexe.live • github.com/ItsCaptainEXE
 """
 
 MESSAGES = [
@@ -27,9 +28,11 @@ def stream():
     def gen():
         while True:
             msg = random.choice(MESSAGES)
-            yield "\033[2J\033[H" + msg + "\n\n" + BANNER
-            time.sleep(10)
+            # clear screen + move cursor home
+            yield "\033[2J\033[H" + msg + "\n\n" + BANNER + "\n"
+            time.sleep(2.3)  # <- 2.3 seconds
     return Response(gen(), mimetype="text/plain")
 
 if __name__ == "__main__":
+    # Railway uses Procfile in production, this is just for local runs
     app.run(host="0.0.0.0", port=8080)
