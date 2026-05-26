@@ -3,8 +3,13 @@ import time, random
 
 app = Flask(__name__)
 
-BANNER = r"""
-print("yup,yup just finishing my coffee")
+# Catppuccin Mocha purple
+PURPLE = "\033[38;2;203;166;247m"
+WHITE = "\033[97m"
+RESET = "\033[0m"
+
+BANNER = rf"""
+{WHITE}print("yup,yup just finishing my coffee")
 
           (=^･ω･^=)  💻💥💥
             /   \      *tap tap*
@@ -12,7 +17,7 @@ print("yup,yup just finishing my coffee")
             |___|
 
                           @ItsCaptainEXE
-          captainexe.live • github.com/ItsCaptainEXE
+          captainexe.live • github.com/ItsCaptainEXE{RESET}
 """
 
 MESSAGES = [
@@ -30,7 +35,7 @@ MESSAGES = [
     'print("yup,yup just finishing my coffee")',
     'print("i might be ignoring you")',
 
-    # funnier new ones
+    # funnier ones
     'print("loading… probably")',
     'print("this is fine. everything is fine.")',
     'print("your patience is being monitored")',
@@ -49,9 +54,20 @@ def stream():
     def gen():
         while True:
             msg = random.choice(MESSAGES)
-            screen = "\033[2J\033[H" + msg + "\n\n" + BANNER + "\n"
+
+            # FULL CLEAR + CURSOR HOME
+            clear = "\033[2J\033[H"
+
+            # Purple message + white banner
+            screen = (
+                clear +
+                PURPLE + msg + RESET + "\n\n" +
+                BANNER + "\n"
+            )
+
             yield screen
             time.sleep(2.3)
+
     return Response(gen(), mimetype="text/plain")
 
 if __name__ == "__main__":
